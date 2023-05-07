@@ -4,6 +4,9 @@
   box-sizing: border-box;
 }
 :root {
+  --index: calc(1vw + 1vh);
+  --text-color: #e0dbc3;
+  --transition: transform 0.75s cubic-bezier(0.075, 0.5, 0, 1);
 }
 
 @font-face {
@@ -19,27 +22,124 @@
 
 body {
   background-color: #010101;
-  color: #fff;
   font-family: raleway_f, sans-serif;
   line-height: 1.55;
+}
+
+#smooth-content {
+	will-change: transform;
 }
 
 .main-header {
   position: relative;
 }
 
+.main-header::after {
+  content: "";
+  position: absolute;
+  z-index: 100;
+  width: 100%;
+  height: calc(var(--index) * 8.8);
+  background-image: url(/img/ground.png);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  bottom: calc(var(--index) * -4);
+}
+
 .layers {
-	height: 100vh;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	text-align: center;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  overflow: hidden;
+  position: relative;
 }
 
 .layer {
-	height: 100%;
-	width: 100%;
-	position: absolute;
-	background-size: cover;
-	background-position: center;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  background-size: cover;
+  background-position: center;
+  will-change: transform;
+  /* Указываем браузеру чтобы он уделил больше аппаратных ресурсов на это свойство */
+  z-index: 2;
+  transition: var(--transition);
+}
+
+.layers__base {
+  transform: translate3d(0, calc(var(--scroll-top) / 1.6), 0);
+  z-index: 0;
+}
+
+.layers__middle {
+  transform: translate3d(0, calc(var(--scroll-top) / 2.5), 0);
+}
+
+.layers__front {
+  transform: translate3d(0, calc(var(--scroll-top) / 5), 0);
+}
+
+.layer__header {
+  text-transform: uppercase;
+  z-index: 1;
+  transform: translate3d(0, calc(var(--scroll-top) / 2), 0);
+  will-change: transform;
+  /* Указываем браузеру чтобы он уделил больше аппаратных ресурсов на это свойство */
+  font-weight: 900;
+  color: var(--text-color);
+  text-shadow: 0 0 15px #987a28;
+	transition: var(--transition);
+}
+
+.layers__title {
+  font-size: calc(var(--index) * 2.5);
+  letter-spacing: calc(var(--index) / 2.5);
+}
+
+.layers__caption {
+  font-size: calc(var(--index) / 1.175);
+  letter-spacing: calc(var(--index) / 3.5);
+  margin-top: calc(var(--index) * -2);
+}
+
+.main-article {
+  min-height: 100vh;
+  background-size: cover;
+  background-position: center;
+  color: var(--text-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  text-align: center;
+}
+
+.main-article__header {
+  text-transform: uppercase;
+  font-size: calc(var(--index) * 1.8);
+  letter-spacing: calc(var(--index) / 7.5);
+}
+
+.main-article__paragraph {
+  max-width: calc(var(--index) * 30);
+  font-size: calc(var(--index) * 0.75);
+  letter-spacing: calc(var(--index) / 20);
+}
+
+.main-article__content {
+  transform: translate3d(0, calc(var(--scroll-top) / -7), 0);
+  will-change: transform;
+  /* Указываем браузеру чтобы он уделил больше аппаратных ресурсов на это свойство */
+  transition: var(--transition);
+}
+
+.copy {
+  position: absolute;
+  bottom: calc(var(--index) * 2.5);
+  opacity: 0.45;
+  font-size: calc(var(--index) * 0.75);
+  letter-spacing: calc(var(--index) / 37.5);
 }
